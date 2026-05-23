@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A small Python WAV beat-map analyzer for Unity rhythm mechanics.">
+  <meta name="description" content="Browser and Python beat-map analyzer for Unity rhythm mechanics.">
   <title>Unity Beat Analyzer</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,6 +15,7 @@
     </a>
     <nav aria-label="Primary navigation">
       <a href="#install">Install</a>
+      <a href="#analyzer">Analyzer</a>
       <a href="#usage">Usage</a>
       <a href="#format">JSON</a>
       <a href="https://github.com/sos-mislom/beat-analyzer">GitHub</a>
@@ -24,14 +25,14 @@
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">WAV to Unity beat maps</p>
-        <h1>Generate rhythm timing JSON for Unity shooters, prototypes, and music games.</h1>
+        <p class="eyebrow">Audio to Unity beat maps</p>
+        <h1>Analyze MP3/WAV in the browser and export Unity rhythm JSON.</h1>
         <p class="lead">
-          Analyze drum transients, estimate tempo, choose a playable beat grid, or export raw onset moments for
-          more chaotic tracks.
+          Drop a song into the site, estimate playable rhythm timing, then copy or download JSON for Unity. No
+          backend, no upload: analysis happens locally in your browser.
         </p>
         <div class="actions">
-          <a class="button primary" href="#usage">Run the analyzer</a>
+          <a class="button primary" href="#analyzer">Open analyzer</a>
           <a class="button" href="https://github.com/sos-mislom/beat-analyzer">View repository</a>
         </div>
       </div>
@@ -52,12 +53,71 @@
         <span>regular beat grid or strongest raw onsets</span>
       </div>
       <div>
-        <strong>WAV input</strong>
-        <span>single files or whole folders</span>
+        <strong>MP3/WAV</strong>
+        <span>browser decoding for local files</span>
       </div>
       <div>
         <strong>Unity ready</strong>
         <span>load as TextAsset from Resources</span>
+      </div>
+    </section>
+
+    <section id="analyzer" class="section analyzer-section">
+      <div class="section-title">
+        <p class="eyebrow">Browser analyzer</p>
+        <h2>Drop audio, get JSON</h2>
+        <p>
+          The site decodes the file locally with Web Audio API. Use <code>grid</code> for stable beat timing and
+          <code>onsets</code> for direct hit moments.
+        </p>
+      </div>
+
+      <div class="analyzer-panel">
+        <div class="controls">
+          <label class="file-picker">
+            <input id="audioFile" type="file" accept="audio/*">
+            <span>Choose audio file</span>
+          </label>
+
+          <label>
+            <span>Mode</span>
+            <select id="analysisMode">
+              <option value="grid">grid</option>
+              <option value="onsets">onsets</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Onset density</span>
+            <input id="targetDensity" type="number" min="0.25" max="8" step="0.25" value="2">
+          </label>
+
+          <button id="analyzeButton" class="button primary" type="button">Analyze</button>
+        </div>
+
+        <div id="analysisStatus" class="status">Waiting for an audio file.</div>
+
+        <div class="result-grid">
+          <div>
+            <span>Tempo</span>
+            <strong id="tempoStat">-</strong>
+          </div>
+          <div>
+            <span>Beats</span>
+            <strong id="beatCountStat">-</strong>
+          </div>
+          <div>
+            <span>Duration</span>
+            <strong id="durationStat">-</strong>
+          </div>
+        </div>
+
+        <textarea id="jsonOutput" spellcheck="false" placeholder="Generated Unity JSON will appear here."></textarea>
+
+        <div class="actions result-actions">
+          <button id="copyButton" class="button" type="button">Copy JSON</button>
+          <button id="downloadButton" class="button" type="button">Download JSON</button>
+        </div>
       </div>
     </section>
 
