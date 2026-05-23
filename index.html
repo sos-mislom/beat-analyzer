@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A small Python WAV beat-map analyzer for Unity rhythm mechanics.">
+  <title>Unity Beat Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark"></span>
+      <span>Unity Beat Analyzer</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#install">Install</a>
+      <a href="#usage">Usage</a>
+      <a href="#format">JSON</a>
+      <a href="https://github.com/sos-mislom/beat-analyzer">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">WAV to Unity beat maps</p>
+        <h1>Generate rhythm timing JSON for Unity shooters, prototypes, and music games.</h1>
+        <p class="lead">
+          Analyze drum transients, estimate tempo, choose a playable beat grid, or export raw onset moments for
+          more chaotic tracks.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#usage">Run the analyzer</a>
+          <a class="button" href="https://github.com/sos-mislom/beat-analyzer">View repository</a>
+        </div>
+      </div>
+
+      <div class="visual" aria-label="Animated beat timeline">
+        <canvas id="beatCanvas" width="760" height="360"></canvas>
+        <div class="visual-caption">
+          <span>grid mode</span>
+          <span>onsets mode</span>
+          <span>Unity JSON</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip">
+      <div>
+        <strong>2 modes</strong>
+        <span>regular beat grid or strongest raw onsets</span>
+      </div>
+      <div>
+        <strong>WAV input</strong>
+        <span>single files or whole folders</span>
+      </div>
+      <div>
+        <strong>Unity ready</strong>
+        <span>load as TextAsset from Resources</span>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Install</p>
+        <h2>Small Python setup</h2>
+      </div>
+      <pre><code>git clone https://github.com/sos-mislom/beat-analyzer.git
+cd beat-analyzer
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt</code></pre>
+    </section>
+
+    <section id="usage" class="section two-column">
+      <div class="section-title">
+        <p class="eyebrow">Usage</p>
+        <h2>Choose the timing style</h2>
+        <p>
+          Use <code>grid</code> when the song has a clear pulse. Use <code>onsets</code> when the track is dense,
+          broken, vocal-heavy, or has irregular hits that should drive gameplay moments.
+        </p>
+      </div>
+      <div class="command-stack">
+        <div>
+          <span>Regular grid</span>
+          <pre><code>python beat_analyzer.py song.wav --mode grid --suffix _auto</code></pre>
+        </div>
+        <div>
+          <span>Raw onsets</span>
+          <pre><code>python beat_analyzer.py song.wav --mode onsets --target-density 2.0 --suffix _onsets</code></pre>
+        </div>
+        <div>
+          <span>Folder batch</span>
+          <pre><code>python beat_analyzer.py Music --mode onsets --suffix _onsets --overwrite</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="format" class="section two-column">
+      <div class="section-title">
+        <p class="eyebrow">Output</p>
+        <h2>Simple JSON for Unity</h2>
+        <p>
+          Drop the generated file into <code>Assets/Resources/Music/&lt;Track&gt;/</code>, load it as a
+          <code>TextAsset</code>, and deserialize <code>tempo</code>, <code>beats</code>, and <code>duration</code>.
+        </p>
+      </div>
+      <pre><code>{
+  "tempo": 120.0,
+  "beats": [0.12, 0.62, 1.12, 1.62],
+  "duration": 2.0,
+  "analysisMode": "grid",
+  "analysis": {
+    "interval": 0.5,
+    "offset": 0.12,
+    "onsetCount": 4
+  }
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <span>MIT License</span>
+    <a href="https://github.com/sos-mislom/beat-analyzer">github.com/sos-mislom/beat-analyzer</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
