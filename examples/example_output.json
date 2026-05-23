@@ -1,0 +1,23 @@
+{
+  "tempo": 120.0,
+  "beats": [
+    0.12,
+    0.62,
+    1.12,
+    1.62
+  ],
+  "duration": 2.0,
+  "analysisMode": "grid",
+  "analysis": {
+    "source": "beat_analyzer.py",
+    "interval": 0.5,
+    "offset": 0.12,
+    "onsetCount": 4,
+    "strongOnsets": [
+      0.12,
+      0.62,
+      1.12,
+      1.62
+    ]
+  }
+}

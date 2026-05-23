@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Tool output
+*_auto.json
+*_onsets.json
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
